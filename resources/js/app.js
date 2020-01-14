@@ -7,9 +7,9 @@ import Vuex from 'vuex'
 import storeData from "./store/index"
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+const store = new Vuex.Store(
     storeData
-})
+)
 
 
 
@@ -56,7 +56,7 @@ window.toast = Toast
 
 const router = new VueRouter({
     routes,
-    mode: 'history' 
+    mode: 'hash' 
   })
 
 const app = new Vue({

@@ -20,9 +20,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Name</td>
+                        <tr v-for="(category,index) in getallCategory" :key="category.id">
+                            <td>{{ index+1 }}</td>
+                            <td>{{ category.cat_name }}</td>
                             <td>
                                 <a href="" class="btn btn-success btn-sm">Edit</a>
                                 <a href="" class="btn btn-danger btn-sm">Trash</a>
@@ -45,7 +45,19 @@
     // $("#example1").DataTable();
 
 export default {
-    name: 'List'
+    name: 'List',
+    mounted() {
+         this.$store.dispatch("allCategory")
+    },
+    computed: {
+        getallCategory(){
+            // return this.$store.getters.getCategory
+            return this.$store.getters.getCategory
+        }
+    },
+    methods: {
+        
+    },
 }
 </script>
 
