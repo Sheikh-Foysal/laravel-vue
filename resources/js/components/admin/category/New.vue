@@ -11,7 +11,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Add Category Name" id="categoryId">
+                        <input type="text" class="form-control" placeholder="Add Category Name" id="categoryId" name="cat_name">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-success">Save</button>
