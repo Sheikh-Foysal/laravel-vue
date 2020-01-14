@@ -45,6 +45,11 @@ export default {
                 .then((response)=>{
                     // console.log(response.data)
                     this.$router.push('/category-list')
+                    
+                        toast.fire({
+                        icon: 'success',
+                        title: 'Category added successfully :)'
+                        })
                 })
                  .catch( ()=>{
                      console.log('failed')
