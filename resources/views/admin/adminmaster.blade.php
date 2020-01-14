@@ -159,13 +159,13 @@
                                 </router-link>
                             </li>
                             <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
+                                <router-link to="/category-list" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Category
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
-                                </a>
+                                </router-link>
                             </li>
                             <li class="nav-item has-treeview">
                                 <router-link  to="/posts" class="nav-link">
@@ -189,7 +189,7 @@
 
                     <!-- Main content -->
                     <section class="content">
-                        <div class="card mt-5 mb-5 pt-5 pb-5">
+                        <div class="card mt-5 mb-5">
                             <div class="card-body">
                                 {{-- <example-component></example-component> --}}
                                 <admin-main></admin-main>
