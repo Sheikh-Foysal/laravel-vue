@@ -24,4 +24,9 @@ class CategoryController extends Controller
         $category->save();
         return ['message' => 'Saved'];
     }
+
+    public function delete_category($id){
+        $category = Category::find($id);
+        $category->delete();
+    }
 }

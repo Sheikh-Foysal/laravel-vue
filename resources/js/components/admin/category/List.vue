@@ -27,7 +27,7 @@
                             <td>{{ category.created_at | timeformat }}</td>
                             <td>
                                 <a href="" class="btn btn-success btn-sm">Edit</a>
-                                <a href="" class="btn btn-danger btn-sm">Trash</a>
+                                <a href="" class="btn btn-danger btn-sm" @click.prevent = "deleteCategory(category.id)">Trash</a>
                             </td>
                         </tr>
                     </tbody>
@@ -58,7 +58,19 @@ export default {
         }
     },
     methods: {
-        
+        deleteCategory(id){
+            axios.get('/category/'+id)
+                    this.$store.dispatch("allCategory")
+                    .then((response)=>{
+                        toast.fire({
+                            icon: 'success',
+                            title: 'Category deleted successfully ;)'
+                        })
+                    })
+                    .catch(()=>{
+
+                    })
+        }
     },
 }
 </script>
