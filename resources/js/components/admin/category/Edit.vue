@@ -12,7 +12,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form @submit.prevent="addCategory()">
+                    <form @submit.prevent="updateCategory()">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Update Category Name" id="categoryId" v-model="form.cat_name" name="cat_name" :class="{ 'is-invalid': form.errors.has('cat_name') }">
                             <has-error :form="form" field="cat_name"></has-error>
@@ -48,15 +48,15 @@ export default {
         }
     },
     methods:{
-        addCategory(){
-            this.form.post('/add-category')
+        updateCategory(){
+            this.form.post(`/update-category/${this.$route.params.categoryid}`)
                 .then((response)=>{
                     // console.log(response.data)
                     this.$router.push('/category-list')
                     
                         toast.fire({
                         icon: 'success',
-                        title: 'Category added successfully :)'
+                        title: 'Category Updated successfully :)'
                         })
                 })
                  .catch( ()=>{
