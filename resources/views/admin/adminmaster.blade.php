@@ -168,7 +168,7 @@
                                 </router-link>
                             </li>
                             <li class="nav-item has-treeview">
-                                <router-link  to="/posts" class="nav-link">
+                                <router-link  to="/post-list" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Posts
