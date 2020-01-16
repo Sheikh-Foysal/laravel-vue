@@ -25,6 +25,13 @@ class CategoryController extends Controller
         return ['message' => 'Saved'];
     }
 
+    public function edit_category($id){
+        $category = Category::find($id);
+        return response()->json([
+            'category' => $category
+        ],200);
+    }
+
     public function delete_category($id){
         $category = Category::find($id);
         $category->delete();

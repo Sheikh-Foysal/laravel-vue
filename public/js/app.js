@@ -1980,8 +1980,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Edit'
+  name: 'Edit',
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/editcategory/".concat(this.$route.params.categoryid)).then(function (response) {
+      _this.form.fill(response.data.category);
+    });
+  },
+  data: function data() {
+    return {
+      form: new Form({
+        cat_name: ''
+      })
+    };
+  },
+  methods: {
+    addCategory: function addCategory() {
+      var _this2 = this;
+
+      this.form.post('/add-category').then(function (response) {
+        // console.log(response.data)
+        _this2.$router.push('/category-list');
+
+        toast.fire({
+          icon: 'success',
+          title: 'Category added successfully :)'
+        });
+      })["catch"](function () {
+        console.log('failed');
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -59229,12 +59262,77 @@ var render = function() {
             ],
             1
           )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.addCategory()
+                }
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.cat_name,
+                        expression: "form.cat_name"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.form.errors.has("cat_name") },
+                    attrs: {
+                      type: "text",
+                      placeholder: "Update Category Name",
+                      id: "categoryId",
+                      name: "cat_name"
+                    },
+                    domProps: { value: _vm.form.cat_name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "cat_name", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("has-error", {
+                    attrs: { form: _vm.form, field: "cat_name" }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm._m(0)
+            ]
+          )
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("button", { staticClass: "btn btn-success" }, [_vm._v("Update")])
+    ])
+  }
+]
 render._withStripped = true
 
 
