@@ -1987,6 +1987,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    console.log('mounted');
     axios.get("/editcategory/".concat(this.$route.params.categoryid)).then(function (response) {
       _this.form.fill(response.data.category);
     });
@@ -2260,11 +2261,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // $("#example1").DataTable();
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'List',
-  mounted: function mounted() {},
-  computed: {},
+  mounted: function mounted() {
+    this.$store.dispatch('allPost');
+  },
+  computed: {
+    getallPost: function getallPost() {
+      console.log(this.$store.getters.getPost);
+      return this.$store.getters.getPost;
+    }
+  },
   methods: {}
 });
 
@@ -59382,7 +59400,7 @@ var render = function() {
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-header" }, [
           _c("h3", { staticClass: "card-title" }, [
-            _vm._v("Edit Category " + _vm._s(this.$route.params.categoryid))
+            _vm._v("Edit Category  " + _vm._s(this.$route.params.categoryid))
           ]),
           _vm._v(" "),
           _c(
@@ -59804,7 +59822,52 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "table",
+              {
+                staticClass: "table table-bordered table-hover",
+                attrs: { id: "example2" }
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.getallPost, function(post, index) {
+                    return _c("tr", { key: post.id }, [
+                      _c("td", [_vm._v(_vm._s(index + 1))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(post.user.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("category")]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(post.title.substring(0, 20)) + "...")
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(post.description.substring(0, 30)) + "..."
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("img", { attrs: { src: post.photo, alt: "" } })
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(_vm._f("timeformat")(post.created_at)))
+                      ]),
+                      _vm._v(" "),
+                      _c("td")
+                    ])
+                  }),
+                  0
+                )
+              ]
+            )
+          ])
         ])
       ])
     ])
@@ -59815,35 +59878,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c(
-        "table",
-        {
-          staticClass: "table table-bordered table-hover",
-          attrs: { id: "example2" }
-        },
-        [
-          _c("thead", [
-            _c("tr", [
-              _c("th", [_vm._v("#")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("User")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Category")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Title")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Description")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Photo")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Action")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tbody")
-        ]
-      )
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("User")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Category")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Title")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Photo")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
     ])
   }
 ]
@@ -76743,11 +76795,15 @@ var routes = [{
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
-    category: []
+    category: [],
+    post: []
   },
   getters: {
     getCategory: function getCategory(state) {
       return state.category;
+    },
+    getPost: function getPost(state) {
+      return state.post;
     }
   },
   actions: {
@@ -76756,11 +76812,20 @@ __webpack_require__.r(__webpack_exports__);
         // console.log(response.data.categories)
         context.commit('categories', response.data.categories);
       });
+    },
+    allPost: function allPost(context) {
+      axios.get('/posts').then(function (response) {
+        // console.log(response.data.categories)
+        context.commit('posts', response.data.posts);
+      });
     }
   },
   mutations: {
     categories: function categories(state, data) {
       return state.category = data;
+    },
+    posts: function posts(state, data) {
+      return state.post = data;
     }
   }
 });

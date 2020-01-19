@@ -5,7 +5,7 @@
             <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                <h3 class="card-title">Edit Category {{ this.$route.params.categoryid }}</h3>
+                <h3 class="card-title">Edit Category  {{ this.$route.params.categoryid }}</h3>
                     <div class="card-tools">
                         <router-link to="/category-list" class="btn btn-success">Back</router-link>
                     </div>
@@ -35,6 +35,7 @@
 export default {
     name: 'Edit',
     mounted(){
+        console.log('mounted');
         axios.get(`/editcategory/${this.$route.params.categoryid}`)
             .then((response)=>{
                 this.form.fill(response.data.category)

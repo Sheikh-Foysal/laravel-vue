@@ -20,11 +20,21 @@
                             <th>Title</th>
                             <th>Description</th>
                             <th>Photo</th>
+                            <th>Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        <tr v-for="(post,index) in getallPost" :key="post.id">
+                            <td>{{ index+1 }}</td>
+                            <td>{{ post.user.name }}</td>
+                            <td>category</td>
+                            <td>{{ post.title.substring(0,20) }}...</td>
+                            <td>{{ post.description.substring(0,30)}}...</td>
+                            <td><img v-bind:src="post.photo" alt=""></td>
+                            <td>{{ post.created_at | timeformat }}</td>
+                            <td></td>
+                        </tr>
                     </tbody>
                 </table>
                 </div>
@@ -44,10 +54,13 @@
 export default {
     name: 'List',
     mounted(){
-
+        this.$store.dispatch('allPost')
     },
     computed:{
-
+        getallPost(){
+            console.log(this.$store.getters.getPost);
+            return this.$store.getters.getPost
+        }
     },
     methods:{
         
