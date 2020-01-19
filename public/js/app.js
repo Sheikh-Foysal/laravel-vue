@@ -2262,7 +2262,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 // $("#example1").DataTable();
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'List'
+  name: 'List',
+  mounted: function mounted() {},
+  computed: {},
+  methods: {}
 });
 
 /***/ }),

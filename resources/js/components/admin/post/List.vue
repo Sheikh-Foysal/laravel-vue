@@ -43,6 +43,15 @@
 
 export default {
     name: 'List',
+    mounted(){
+
+    },
+    computed:{
+
+    },
+    methods:{
+        
+    }
 }
 </script>
 
