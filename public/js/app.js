@@ -2271,6 +2271,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 // $("#example1").DataTable();
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'List',
@@ -60485,7 +60489,26 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(post.user.name))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v("category")]),
+                      _c(
+                        "td",
+                        _vm._l(post.category, function(category) {
+                          return _c(
+                            "span",
+                            {
+                              key: category.id,
+                              staticClass: "badge badge-primary"
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(category.cat_name) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      ),
                       _vm._v(" "),
                       _c("td", [
                         _vm._v(

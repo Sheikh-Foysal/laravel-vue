@@ -28,7 +28,11 @@
                         <tr v-for="(post,index) in getallPost" :key="post.id">
                             <td>{{ index+1 }}</td>
                             <td>{{ post.user.name }}</td>
-                            <td>category</td>
+                            <td>
+                                <span class="badge badge-primary" v-for="category in post.category" :key="category.id">
+                                    {{ category.cat_name }}
+                                </span>
+                            </td>
                             <td>{{ post.title | sortlength(20,"...") }}</td>
                             <td>{{ post.description | sortlength(40,"...")}}</td>
                             <td><img class="img_width"  :src="post.photo" alt=""></td>
