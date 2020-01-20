@@ -31,7 +31,8 @@
                         </div>
                         <div class="form-group">
                             <label for="photo">Photo</label>
-                            <input type="file" class="form-control" name="photo"/>
+                            <input type="file" @change="changePhoto($event)" class="form-control" name="photo"/>
+                                <img :src="form.photo" alt="" class="img_width"/>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success">Save</button>
@@ -69,11 +70,25 @@ export default {
         }
     },
     methods: {
-       
+       changePhoto(event){
+           let file = event.target.files[0];
+           let reader = new FileReader();
+           reader.onload = event => {
+               this.form.photo = event.target.result
+           };
+           reader.readAsDataURL(file);
+       }
     },
 }
 </script>
 
 <style scoped>
-
+img.img_width {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border: 1px solid #eee;
+    padding: 10px;
+    margin: 30px 0;
+}
 </style>
