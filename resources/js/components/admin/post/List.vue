@@ -29,9 +29,9 @@
                             <td>{{ index+1 }}</td>
                             <td>{{ post.user.name }}</td>
                             <td>category</td>
-                            <td>{{ post.title.substring(0,20) }}...</td>
-                            <td>{{ post.description.substring(0,30)}}...</td>
-                            <td><img v-bind:src="post.photo" alt=""></td>
+                            <td>{{ post.title | sortlength(20,"...") }}</td>
+                            <td>{{ post.description | sortlength(40,"...")}}</td>
+                            <td><img class="img_width"  :src="post.photo" alt=""></td>
                             <td>{{ post.created_at | timeformat }}</td>
                             <td></td>
                         </tr>
@@ -69,5 +69,9 @@ export default {
 </script>
 
 <style scoped>
-
+img.img_width {
+    width: 80px;
+    height: 40px;
+    object-fit: contain;
+}
 </style>
