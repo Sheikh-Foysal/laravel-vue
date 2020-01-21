@@ -27,7 +27,11 @@
                     <tbody>
                         <tr v-for="(post,index) in getallPost" :key="post.id">
                             <td>{{ index+1 }}</td>
-                            <td>{{ post.user.name }}</td>
+
+                            <td>
+                                <div v-if="post.user">{{ post.user.name }}</div>
+                                <div v-else=""></div>
+                            </td>
                             <td>
                                 <span class="badge badge-primary" v-for="category in post.category" :key="category.id">
                                     {{ category.cat_name }}
@@ -35,9 +39,13 @@
                             </td>
                             <td>{{ post.title | sortlength(20,"...") }}</td>
                             <td>{{ post.description | sortlength(40,"...")}}</td>
-                            <td><img class="img_width"  :src="post.photo" alt=""></td>
+                            <td><img class="img_width"  :src="postImg(post.photo)" alt=""></td>
+                            <!-- <td><img class="img_width" src="" alt=""></td> -->
                             <td>{{ post.created_at | timeformat }}</td>
-                            <td></td>
+                            <td>
+                                <a href="" class="btn btn-success btn-sm">Edit</a>
+                                <a href="" @click.prevent="deletePost(post.id)" class="btn btn-danger btn-sm">Trash</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -67,7 +75,22 @@ export default {
         }
     },
     methods:{
-        
+        postImg(img){
+            return 'uploadimage/'+img;
+        },
+        deletePost(id){
+            axios.get('/delete_post/'+id)
+                this.$store.dispatch('allPost')
+                .then((response)=>{
+                        toast.fire({
+                            icon: 'success',
+                            title: 'Post deleted successfully ;)'
+                        })
+                    })
+                    .catch(()=>{
+
+                    })
+        }
     }
 }
 </script>

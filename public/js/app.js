@@ -2275,6 +2275,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 // $("#example1").DataTable();
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'List',
@@ -2287,7 +2295,20 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.getters.getPost;
     }
   },
-  methods: {}
+  methods: {
+    postImg: function postImg(img) {
+      return 'uploadimage/' + img;
+    },
+    deletePost: function deletePost(id) {
+      axios.get('/delete_post/' + id);
+      this.$store.dispatch('allPost').then(function (response) {
+        toast.fire({
+          icon: 'success',
+          title: 'Post deleted successfully ;)'
+        });
+      })["catch"](function () {});
+    }
+  }
 });
 
 /***/ }),
@@ -2301,6 +2322,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -2378,13 +2400,34 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var file = event.target.files[0];
-      var reader = new FileReader();
 
-      reader.onload = function (event) {
-        _this.form.photo = event.target.result;
-      };
+      if (file.size > 1000000) {
+        swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Max uploaded size 1 MB'
+        });
+      } else {
+        var reader = new FileReader();
 
-      reader.readAsDataURL(file);
+        reader.onload = function (event) {
+          _this.form.photo = event.target.result; // console.log(event.target.result)
+        };
+
+        reader.readAsDataURL(file);
+      }
+    },
+    addnewPost: function addnewPost() {
+      var _this2 = this;
+
+      this.form.post('savepost').then(function () {
+        _this2.$router.push('/post-list');
+
+        toast.fire({
+          icon: 'success',
+          title: 'Post added successfully :)'
+        });
+      })["catch"](function () {});
     }
   }
 });
@@ -74387,7 +74430,11 @@ var render = function() {
                     return _c("tr", { key: post.id }, [
                       _c("td", [_vm._v(_vm._s(index + 1))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(post.user.name))]),
+                      _c("td", [
+                        post.user
+                          ? _c("div", [_vm._v(_vm._s(post.user.name))])
+                          : _c("div")
+                      ]),
                       _vm._v(" "),
                       _c(
                         "td",
@@ -74427,7 +74474,7 @@ var render = function() {
                       _c("td", [
                         _c("img", {
                           staticClass: "img_width",
-                          attrs: { src: post.photo, alt: "" }
+                          attrs: { src: _vm.postImg(post.photo), alt: "" }
                         })
                       ]),
                       _vm._v(" "),
@@ -74435,7 +74482,31 @@ var render = function() {
                         _vm._v(_vm._s(_vm._f("timeformat")(post.created_at)))
                       ]),
                       _vm._v(" "),
-                      _c("td")
+                      _c("td", [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-success btn-sm",
+                            attrs: { href: "" }
+                          },
+                          [_vm._v("Edit")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-danger btn-sm",
+                            attrs: { href: "" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.deletePost(post.id)
+                              }
+                            }
+                          },
+                          [_vm._v("Trash")]
+                        )
+                      ])
                     ])
                   }),
                   0
@@ -74507,10 +74578,7 @@ var render = function() {
             [
               _c(
                 "router-link",
-                {
-                  staticClass: "btn btn-success",
-                  attrs: { to: "/category-list" }
-                },
+                { staticClass: "btn btn-success", attrs: { to: "/post-list" } },
                 [_vm._v("Back")]
               )
             ],
@@ -74526,7 +74594,7 @@ var render = function() {
               on: {
                 submit: function($event) {
                   $event.preventDefault()
-                  return _vm.addCategory()
+                  return _vm.addnewPost()
                 }
               }
             },
@@ -74607,11 +74675,38 @@ var render = function() {
                   _c(
                     "select",
                     {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.category_id,
+                          expression: "form.category_id"
+                        }
+                      ],
                       staticClass: "form-control",
                       class: {
                         "is-invalid": _vm.form.errors.has("category_id")
                       },
-                      attrs: { name: "category_id" }
+                      attrs: { name: "category_id" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.form,
+                            "category_id",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
                     },
                     [
                       _c("option", { attrs: { seleted: "", disabled: "" } }, [
@@ -74639,24 +74734,34 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "photo" } }, [_vm._v("Photo")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "file", name: "photo" },
-                  on: {
-                    change: function($event) {
-                      return _vm.changePhoto($event)
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", { attrs: { for: "photo" } }, [_vm._v("Photo")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.form.errors.has("photo") },
+                    attrs: { type: "file", name: "photo" },
+                    on: {
+                      change: function($event) {
+                        return _vm.changePhoto($event)
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("img", {
-                  staticClass: "img_width",
-                  attrs: { src: _vm.form.photo, alt: "" }
-                })
-              ]),
+                  }),
+                  _vm._v(" "),
+                  _c("has-error", {
+                    attrs: { form: _vm.form, field: "photo" }
+                  }),
+                  _vm._v(" "),
+                  _c("img", {
+                    staticClass: "img_width",
+                    attrs: { src: _vm.form.photo, alt: "" }
+                  })
+                ],
+                1
+              ),
               _vm._v(" "),
               _vm._m(0)
             ]

@@ -5,12 +5,12 @@
                 <div class="card-header">
                 <h3 class="card-title">Add Post</h3>
                     <div class="card-tools">
-                        <router-link to="/category-list" class="btn btn-success">Back</router-link>
+                        <router-link to="/post-list" class="btn btn-success">Back</router-link>
                     </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form @submit.prevent="addCategory()" enctype="multipart/form-data">
+                    <form @submit.prevent="addnewPost()" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text" class="form-control" placeholder="Add title" id="titleId" v-model="form.title" name="title" :class="{ 'is-invalid': form.errors.has('title') }">
@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group">
                             <label for="Category">Category</label>
-                            <select class="form-control" name="category_id" :class="{ 'is-invalid': form.errors.has('category_id') }">
+                            <select class="form-control" name="category_id" :class="{ 'is-invalid': form.errors.has('category_id') }" v-model="form.category_id">
                                 <option seleted disabled>Select one..</option>
                                 <option :value="category.id" v-for="category in getallCategory" :key="category.id">{{ category.cat_name }}</option>
                             </select>
@@ -32,7 +32,8 @@
                         </div>
                         <div class="form-group">
                             <label for="photo">Photo</label>
-                            <input type="file" @change="changePhoto($event)" class="form-control" name="photo"/>
+                            <input type="file" @change="changePhoto($event)" class="form-control" name="photo"  :class="{ 'is-invalid': form.errors.has('photo') }"/>
+                            <has-error :form="form" field="photo"></has-error>
                                 <img :src="form.photo" alt="" class="img_width"/>
                         </div>
                         <div class="form-group">
@@ -74,11 +75,33 @@ export default {
     methods: {
        changePhoto(event){
            let file = event.target.files[0];
-           let reader = new FileReader();
-           reader.onload = event => {
-               this.form.photo = event.target.result
-           };
-           reader.readAsDataURL(file);
+           if(file.size > 1000000){
+                swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Max uploaded size 1 MB',
+                })
+           }else{
+               let reader = new FileReader();
+                reader.onload = event => {
+                    this.form.photo = event.target.result;
+                    // console.log(event.target.result)
+                };
+                reader.readAsDataURL(file);
+           }
+       },
+       addnewPost(){
+           this.form.post('savepost')
+            .then(()=>{
+                        this.$router.push('/post-list')
+                        toast.fire({
+                        icon: 'success',
+                        title: 'Post added successfully :)'
+                        })
+            })
+            .catch(()=>{
+
+            })
        }
     },
 }
