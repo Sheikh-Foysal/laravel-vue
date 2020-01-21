@@ -18,14 +18,15 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea type="text" class="form-control" placeholder="Add description" id="descriptionId" v-model="form.description" name="description" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
+                            <!-- <textarea type="text" class="form-control" placeholder="Add description" id="descriptionId" v-model="form.description" name="description" :class="{ 'is-invalid': form.errors.has('description') }"></textarea> -->
+                                    <markdown-editor :options="options" v-model="form.description" name="description" ></markdown-editor>
                             <has-error :form="form" field="description"></has-error>
                         </div>
                         <div class="form-group">
                             <label for="Category">Category</label>
                             <select class="form-control" name="category_id" :class="{ 'is-invalid': form.errors.has('category_id') }">
                                 <option seleted disabled>Select one..</option>
-                                <option :value="category.id" v-for="category in getallCategory">{{ category.cat_name }}</option>
+                                <option :value="category.id" v-for="category in getallCategory" :key="category.id">{{ category.cat_name }}</option>
                             </select>
                             <has-error :form="form" field="category_id"></has-error>
                         </div>
@@ -58,7 +59,8 @@ export default {
                 description:'',
                 category_id:'',
                 photo:'' 
-            })
+            }),
+            options: {}
         }
     },
     mounted(){

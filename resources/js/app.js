@@ -2,6 +2,8 @@
 require('./bootstrap');
 window.Vue = require('vue');
 
+
+
 // Vuex
 import Vuex from 'vuex'
 import storeData from "./store/index"
@@ -10,6 +12,13 @@ Vue.use(Vuex)
 const store = new Vuex.Store(
     storeData
 )
+
+
+//markdown editor support
+import 'v-markdown-editor/dist/index.css';
+import Editor from 'v-markdown-editor'
+Vue.use(Editor);// global register
+
 
 
 // support moment js
