@@ -38,7 +38,7 @@ export const routes = [
         component: AddPost
     },
     {
-        path: '/edit-post',
+        path: '/edit-post/:postid',
         component: EditPost
     }
   ]

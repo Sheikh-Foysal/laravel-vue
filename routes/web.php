@@ -19,9 +19,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/posts','PostController@all_posts')->name('posts');
-Route::get('/post/{id}','PostController@edit_post');
+Route::get('/edit_post/{id}','PostController@edit_post');
 Route::post('/savepost','PostController@save_post');
 Route::get('/delete_post/{id}','PostController@delete_post');
+Route::post('/update-post/{id}','PostController@update_post');
 
 // Route::get('/{anypath}','HomeController@index')->where('path','.*');
 // Route::get('/{any}','HomeController@index')->where('any', '.*');

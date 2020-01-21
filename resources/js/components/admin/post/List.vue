@@ -43,7 +43,10 @@
                             <!-- <td><img class="img_width" src="" alt=""></td> -->
                             <td>{{ post.created_at | timeformat }}</td>
                             <td>
-                                <a href="" class="btn btn-success btn-sm">Edit</a>
+                                <router-link :to="`edit-post/${post.id}`" class="btn btn-success btn-sm">Edit</router-link>
+                                
+                                <!-- <router-link :to="`/edit-category/${category.id}`" class="btn btn-success btn-sm">Edit</router-link> -->
+
                                 <a href="" @click.prevent="deletePost(post.id)" class="btn btn-danger btn-sm">Trash</a>
                             </td>
                         </tr>
