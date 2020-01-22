@@ -25,7 +25,7 @@
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png')}}" />
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png')}}" />
   <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png')}}" />
-  <link rel="shortcut icon" href="ico/favicon.png')}}" />
+  <link rel="shortcut icon" href="ico/favicon.png" />
 
   <!-- =======================================================
     Theme Name: Flattern
@@ -170,7 +170,7 @@
                 <div class="row">
                 <div class="span4">
                     <div class="logo">
-                    <a href="index.html"><img src="{{ asset('assets/public/img/logo.png')}}" alt="" class="logo" /></a>
+                    <router-link to="/"><img src="{{ asset('assets/public/img/logo.png')}}" alt="" class="logo" /></router-link>
                     <h1>Flat and trendy bootstrap template</h1>
                     </div>
                 </div>

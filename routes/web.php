@@ -35,3 +35,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/editcategory/{id}','CategoryController@edit_category');
     Route::post('/update-category/{id}','CategoryController@update_category');
 });
+
+Route::get('/blogpost','BlogController@get_all_blog_post');
